@@ -1,0 +1,19 @@
+import numpy as np
+from sklearn.datasets import load_iris
+iris = load_iris()
+x = iris.data
+y = iris.target
+print("\n IRIS FEATURES \ TARGET NAMES: \n ", iris.target_names)
+for i in range(len(iris.target_names)):
+    print("\n[{0}]:[{1}]".format(i, iris.target_names[i]))
+from sklearn.model_selection import train_test_split 
+x_train, x_test, y_train, y_test = train_test_split(x, y, random_state = 0)
+from sklearn.neighbors import KNeighborsClassifier
+kn = KNeighborsClassifier(n_neighbors = 1)
+kn.fit(x_train, y_train)
+for i in range(len(x_test)):
+    x = x_test[i]
+    x_new = np.array([x])
+    prediction = kn.predict(x_new)
+    print("\n Actual : {0} {1}, Predicted :{2}{3}".format(y_test[i], iris.target_names[y_test[i]], prediction, iris.target_names[prediction]))
+print("\n TEST SCORE[ACCURACY]: {:.2f}\n".format(kn.score(x_test, y_test)))
